@@ -1,5 +1,7 @@
+import "dotenv/config";
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
+import { Schema, model, connect } from "mongoose";
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
@@ -23,13 +25,13 @@ const typeDefs = `#graphql
 
 const books = [
   {
-    title: "The Awakening",
+    title: "The Awakedsnidssdnsdg!",
 
     author: "Kate Chopin",
   },
 
   {
-    title: "City of Glass",
+    title: "City of Glassfs",
 
     author: "Paul Auster",
   },
@@ -49,9 +51,14 @@ const resolvers = {
 
 // definition and your set of resolvers.
 
+run().catch((err) => console.log(err));
+async function run() {
+  await connect(process.env.DB);
+  console.log(`Connected to mongoDB :${process.env.DB}`);
+}
+
 const server = new ApolloServer({
   typeDefs,
-
   resolvers,
 });
 
@@ -64,7 +71,7 @@ const server = new ApolloServer({
 //  3. prepares your app to handle incoming requests
 
 const { url } = await startStandaloneServer(server, {
-  listen: { port: 4000 },
+  listen: { port: process.env.PORT || 4400 },
 });
 
 console.log(`Apollo server ready at: ${url}`);
