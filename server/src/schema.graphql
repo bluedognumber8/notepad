@@ -2,30 +2,45 @@ scalar DateTime
 type Query {
   notes: [Note!]!
   note(id: ID!): Note!
+  # Добавляем к существующим запросам noteFeed
+  noteFeed(cursor: String): NoteFeed
+  user(username: String!): User
   users: [User!]!
-  user(id: ID!): Note!
+  me: User!
 }
 
 type Note {
   id: ID!
   content: String!
-  author: String!
+  author: User!
   createdAt: DateTime!
   updatedAt: DateTime!
+  favoriteCount: Int!
+  favoritedBy: [User!]
 }
 
 type User {
   id: ID!
-  name: String!
+  username: String!
   email: String!
   avatar: String
+  notes: [Note!]!
+  favorites: [Note!]!
 }
 
 type Mutation {
-  newUser(name: String!, email: String!, avatar: String): User!
-  newNote(content: String!, author: String!): Note!
+  newNote(content: String!): Note!
   updateNote(id: ID!, content: String!): Note!
   deleteNote(id: ID!): Boolean!
+  signUp(username: String!, email: String!, password: String!): String!
+  signIn(username: String, email: String, password: String!): String!
+  toggleFavorite(id: ID!): Note!
+}
+
+type NoteFeed {
+  notes: [Note]!
+  cursor: String!
+  hasNextPage: Boolean!
 }
 
 type Track {
@@ -50,9 +65,4 @@ type Author {
   name: String!
   "Author's profile picture"
   photo: String
-}
-type User {
-  name: String!
-  "Author's profile picture"
-  email: String!
 }

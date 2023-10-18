@@ -1,6 +1,9 @@
 import "dotenv/config";
 import { ApolloServer } from "@apollo/server";
-import { startStandaloneServer } from "@apollo/server/standalone";
+import {
+  StandaloneServerContextFunctionArgument,
+  startStandaloneServer,
+} from "@apollo/server/standalone";
 import { connect } from "mongoose";
 import { readFileSync } from "fs";
 import resolvers from "./resolvers/index.js";
@@ -10,6 +13,20 @@ import {
   resolvers as scalarResolvers,
   typeDefs as scalarTypeDefs,
 } from "graphql-scalars";
+import jwt from "jsonwebtoken";
+
+const getUser = (token) => {
+  if (token) {
+    try {
+      // Возвращаем информацию пользователя из токена
+      return jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+      // Если с токеном возникла проблема, выбрасываем ошибку
+      new Error("Session invalid");
+    }
+  }
+};
+
 const typeDefs = readFileSync("./src/schema.graphql", {
   encoding: "utf-8",
 });
@@ -21,6 +38,7 @@ async function run() {
 }
 
 export interface MyContext {
+  user: any;
   models: any;
   dataSources: {
     trackAPI: TrackAPI;
@@ -36,13 +54,21 @@ const server = new ApolloServer<MyContext>({
 });
 
 const { url } = await startStandaloneServer(server, {
-  context: async () => {
+  context: async ({ req }: StandaloneServerContextFunctionArgument) => {
     const { cache } = server;
+    // Получаем токен пользователя из заголовков
+    const token = req.headers.authorization;
+    // Пытаемся извлечь пользователя с помощью токена
+    const user = getUser(token);
+    // Пока что будем выводить информацию о пользователе в консоль:
+    console.log(user);
+    // Добавляем модели БД и пользователя в контекст
     return {
       dataSources: {
         trackAPI: new TrackAPI({ cache }),
       },
       models,
+      user,
     };
   },
   listen: { port: process.env.PORT || 4000 },
