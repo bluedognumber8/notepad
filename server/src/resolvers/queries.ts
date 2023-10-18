@@ -1,12 +1,17 @@
-const queries = {
+import { QueryResolvers } from "../__generated__/resolvers-types";
+
+const queries: QueryResolvers = {
   books: () => books,
+  tracksForHome: (_, __, contextValue) => {
+    return contextValue.dataSources.trackAPI.getTracksForHome();
+  },
 };
 
-const books = [
+let books = [
   {
     title: "The Awakedsnidssdnsdg!",
 
-    author: "Kate Chopin",
+    author: "Kate Chopind",
   },
 
   {

@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "watch": "concurrently -n typescript,nodemon \"tsc -w \" \"nodemon ./dist/index.js \""
+    "watch": "concurrently -n codegen,typescript,nodemon -c \"bgYellow,bgBlue,bgMagenta\" \"graphql-codegen --watch 'src/**/*.ts'\" \"tsc -w\" \"nodemon ./dist/index.js\"",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "test": "concurrently  --names \"CodeGen,TS,Nodemon\" -c \"bgYellow,bgBlue,bgMagenta\" \"graphql-codegen --watch 'src/**/*.ts'\"  \"tsc -w \" \"nodemon ./dist/index.js\""
   },
   "keywords": [],
   "author": "",
@@ -13,11 +15,15 @@
   "dependencies": {
     "@apollo/datasource-rest": "^6.2.1",
     "@apollo/server": "^4.9.4",
+    "@parcel/watcher": "^2.3.0",
     "dotenv": "^16.3.1",
     "graphql": "^16.8.1",
     "mongoose": "^7.6.3"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "5.0.0",
+    "@graphql-codegen/typescript": "4.0.1",
+    "@graphql-codegen/typescript-resolvers": "4.0.1",
     "@types/node": "^20.8.6",
     "concurrently": "^8.2.1",
     "nodemon": "^3.0.1",
