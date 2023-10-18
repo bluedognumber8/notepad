@@ -19,6 +19,7 @@ async function run() {
 export interface MyContext {
   dataSources: {
     trackAPI: TrackAPI;
+    models;
   };
 }
 
@@ -33,6 +34,7 @@ const { url } = await startStandaloneServer(server, {
     return {
       dataSources: {
         trackAPI: new TrackAPI({ cache }),
+        models,
       },
     };
   },

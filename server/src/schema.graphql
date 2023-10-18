@@ -1,10 +1,10 @@
 type Query {
-  books: [Book]
   tracksForHome: [Track!]!
+  notes: [Note]
 }
 
-type Book {
-  title: String
+type Note {
+  content: String
   author: String
 }
 
@@ -16,6 +16,7 @@ type User {
 
 type Mutation {
   user(name: String!, email: String!, avatar: String): User
+  note(content: String!, author: String!): Note
 }
 
 type Track {

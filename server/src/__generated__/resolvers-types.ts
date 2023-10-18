@@ -27,15 +27,16 @@ export type Author = {
   photo?: Maybe<Scalars['String']['output']>;
 };
 
-export type Book = {
-  __typename?: 'Book';
-  author?: Maybe<Scalars['String']['output']>;
-  title?: Maybe<Scalars['String']['output']>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
+  note?: Maybe<Note>;
   user?: Maybe<User>;
+};
+
+
+export type MutationNoteArgs = {
+  author: Scalars['String']['input'];
+  content: Scalars['String']['input'];
 };
 
 
@@ -45,9 +46,15 @@ export type MutationUserArgs = {
   name: Scalars['String']['input'];
 };
 
+export type Note = {
+  __typename?: 'Note';
+  author?: Maybe<Scalars['String']['output']>;
+  content?: Maybe<Scalars['String']['output']>;
+};
+
 export type Query = {
   __typename?: 'Query';
-  books?: Maybe<Array<Maybe<Book>>>;
+  notes?: Maybe<Array<Maybe<Note>>>;
   tracksForHome: Array<Track>;
 };
 
@@ -148,11 +155,11 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Author: ResolverTypeWrapper<Author>;
-  Book: ResolverTypeWrapper<Book>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
+  Note: ResolverTypeWrapper<Note>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Track: ResolverTypeWrapper<Track>;
@@ -162,11 +169,11 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Author: Author;
-  Book: Book;
   Boolean: Scalars['Boolean']['output'];
   ID: Scalars['ID']['output'];
   Int: Scalars['Int']['output'];
   Mutation: {};
+  Note: Note;
   Query: {};
   String: Scalars['String']['output'];
   Track: Track;
@@ -180,18 +187,19 @@ export type AuthorResolvers<ContextType = MyContext, ParentType extends Resolver
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type BookResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']> = ResolversObject<{
-  author?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
 export type MutationResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+  note?: Resolver<Maybe<ResolversTypes['Note']>, ParentType, ContextType, RequireFields<MutationNoteArgs, 'author' | 'content'>>;
   user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationUserArgs, 'email' | 'name'>>;
 }>;
 
+export type NoteResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Note'] = ResolversParentTypes['Note']> = ResolversObject<{
+  author?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type QueryResolvers<ContextType = MyContext, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  books?: Resolver<Maybe<Array<Maybe<ResolversTypes['Book']>>>, ParentType, ContextType>;
+  notes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Note']>>>, ParentType, ContextType>;
   tracksForHome?: Resolver<Array<ResolversTypes['Track']>, ParentType, ContextType>;
 }>;
 
@@ -215,8 +223,8 @@ export type UserResolvers<ContextType = MyContext, ParentType extends ResolversP
 
 export type Resolvers<ContextType = MyContext> = ResolversObject<{
   Author?: AuthorResolvers<ContextType>;
-  Book?: BookResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  Note?: NoteResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Track?: TrackResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
