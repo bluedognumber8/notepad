@@ -6,6 +6,10 @@ import { readFileSync } from "fs";
 import resolvers from "./resolvers/index.js";
 import TrackAPI from "./datasources/track-api.js";
 import models from "./models/index.js";
+import {
+  resolvers as scalarResolvers,
+  typeDefs as scalarTypeDefs,
+} from "graphql-scalars";
 const typeDefs = readFileSync("./src/schema.graphql", {
   encoding: "utf-8",
 });
@@ -17,15 +21,18 @@ async function run() {
 }
 
 export interface MyContext {
+  models: any;
   dataSources: {
     trackAPI: TrackAPI;
-    models;
   };
 }
 
 const server = new ApolloServer<MyContext>({
-  typeDefs,
-  resolvers,
+  typeDefs: [...scalarTypeDefs, typeDefs],
+  resolvers: {
+    ...scalarResolvers,
+    ...resolvers,
+  },
 });
 
 const { url } = await startStandaloneServer(server, {
@@ -34,8 +41,8 @@ const { url } = await startStandaloneServer(server, {
     return {
       dataSources: {
         trackAPI: new TrackAPI({ cache }),
-        models,
       },
+      models,
     };
   },
   listen: { port: process.env.PORT || 4000 },

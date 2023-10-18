@@ -1,22 +1,35 @@
 import { MutationResolvers } from "../__generated__/resolvers-types";
 
 const mutations: MutationResolvers = {
-  user: async (_, { name, email, avatar }, contextValue) => {
-    const user = new contextValue.dataSources.models.User({
+  newUser: async (_, { name, email, avatar }, { models }) => {
+    return await models.User.create({
       name: name,
       email: email,
       avatar: avatar,
     });
-
-    return await user.save();
   },
-  note: async (_, { content, author }, contextValue) => {
-    const user = new contextValue.dataSources.models.Note({
+  newNote: async (_, { content, author }, { models }) => {
+    return await models.Note.create({
       content: content,
       author: author,
     });
-
-    return await user.save();
+  },
+  deleteNote: async (_, { id }, { models }) => {
+    try {
+      await models.Note.findOneAndRemove({ _id: id });
+      return true;
+    } catch (err) {
+      return false;
+    }
+  },
+  updateNote: async (_, { id, content }, { models }) => {
+    return await models.Note.findOneAndUpdate(
+      { _id: id },
+      { $set: { content: content } },
+      {
+        new: true,
+      }
+    );
   },
 };
 

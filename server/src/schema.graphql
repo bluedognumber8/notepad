@@ -1,22 +1,31 @@
+scalar DateTime
 type Query {
-  tracksForHome: [Track!]!
-  notes: [Note]
+  notes: [Note!]!
+  note(id: ID!): Note!
+  users: [User!]!
+  user(id: ID!): Note!
 }
 
 type Note {
-  content: String
-  author: String
+  id: ID!
+  content: String!
+  author: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type User {
+  id: ID!
   name: String!
   email: String!
   avatar: String
 }
 
 type Mutation {
-  user(name: String!, email: String!, avatar: String): User
-  note(content: String!, author: String!): Note
+  newUser(name: String!, email: String!, avatar: String): User!
+  newNote(content: String!, author: String!): Note!
+  updateNote(id: ID!, content: String!): Note!
+  deleteNote(id: ID!): Boolean!
 }
 
 type Track {
