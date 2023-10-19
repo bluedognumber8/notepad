@@ -60,14 +60,13 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-
+  padding: 16px;
   min-height: 100%;
   font-family: sans-serif;
   background: hsl(0deg 0% 95%);
   color: hsl(0deg 0% 10%);
 }
 header {
-  background-color: gray;
   width: 100%;
   font-size: 0.875rem;
   color: hsl(0deg 0% 30%);
@@ -84,7 +83,6 @@ main {
   background: white;
 }
 footer {
-  background-color: gray;
   margin-top: auto;
   width: 100%;
   font-size: 0.875rem;
