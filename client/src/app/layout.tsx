@@ -8,7 +8,8 @@ import ThemeProvider from "@/lib/theme-provider";
 import GlobalStyle from "@/lib/globalstyle-provider";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import "./styles.css";
+import "./layout.css";
+
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Notepad",

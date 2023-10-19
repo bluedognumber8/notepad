@@ -6,6 +6,8 @@ const links = [
   { name: "Notes", url: "/notes" },
   { name: "Favorite", url: "/favorite" },
   { name: "Profile", url: "/profile" },
+  { name: "SignUp", url: "/signup" },
+  { name: "SignIn", url: "/profile" },
 ];
 function Menu() {
   return (
