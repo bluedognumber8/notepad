@@ -1,35 +1,15 @@
 "use client";
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import styled from "styled-components";
 import styles from "./page.module.css";
 import { useQuery } from "@apollo/client";
 import { gql } from "@/__generated__/gql";
 import { format } from "date-fns";
-
-const GET_NOTES = gql(`
-  query noteFeed($cursor: String) {
-  noteFeed(cursor: $cursor) {
-    cursor
-    hasNextPage
-    notes {
-      id
-      createdAt
-      content
-      favoriteCount
-      author {
-        username
-        id
-        avatar
-      }
-    }
-  }
-}
-`);
+import { GET_NOTE_FEED } from "@/graphql";
 
 function App() {
-  const { loading, error, data, fetchMore } = useQuery(GET_NOTES);
+  const { loading, error, data, fetchMore } = useQuery(GET_NOTE_FEED);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error : {error.message}</p>;
 
@@ -45,7 +25,6 @@ function App() {
               {format(new Date(note?.createdAt), "yyyy-MM-dd")}
             </p>
             <Link href={`/notes/${note?.id}`}>{note?.id}</Link>
-
             <br />
           </React.Fragment>
         );

@@ -1,7 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Link from "next/link";
 import StyledComponentsRegistry from "@/lib/registry";
 import ApolloProvider from "@/lib/apollo-provider";
 import ThemeProvider from "@/lib/theme-provider";
@@ -20,18 +19,16 @@ function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Header />
-        <main>
+        <ApolloProvider>
           <StyledComponentsRegistry>
-            <ApolloProvider>
-              <ThemeProvider>
-                <GlobalStyle />
-                {children}
-              </ThemeProvider>
-            </ApolloProvider>
+            <ThemeProvider>
+              <GlobalStyle />
+              <Header />
+              <main>{children}</main>
+              <Footer />
+            </ThemeProvider>
           </StyledComponentsRegistry>
-        </main>
-        <Footer />
+        </ApolloProvider>
       </body>
     </html>
   );
