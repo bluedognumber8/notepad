@@ -2,11 +2,21 @@
 import React from "react";
 import styled from "styled-components";
 
+type UserFormAction = (args: Partial<{ variables: Variables }>) => void;
+
+interface Variables {
+  username: string;
+  password: string;
+  email: string;
+}
+
 interface UserFormProps {
   form: string;
-  action: any;
+  action: UserFormAction;
+  status: string;
+  children?: React.ReactNode;
 }
-function UserForm({ form, action }: UserFormProps) {
+function UserForm({ form, action, children, status }: UserFormProps) {
   const id = React.useId();
   const usernameId = `${id}-username`;
   const passwordId = `${id}-password`;
@@ -36,6 +46,7 @@ function UserForm({ form, action }: UserFormProps) {
           onChange={(event) => {
             setUsername(event.target.value);
           }}
+          disabled={status === "loading"}
         />
         <label htmlFor={passwordId}>Password</label>
         <input
@@ -45,6 +56,7 @@ function UserForm({ form, action }: UserFormProps) {
           onChange={(event) => {
             setPassword(event.target.value);
           }}
+          disabled={status === "loading"}
         />
         {form == "signUp" && (
           <>
@@ -56,10 +68,12 @@ function UserForm({ form, action }: UserFormProps) {
               onChange={(event) => {
                 setEmail(event.target.value);
               }}
+              disabled={status === "loading"}
             />
           </>
         )}
         <button type="submit">Submit</button>
+        {children}
       </Form>
     </Wrapper>
   );

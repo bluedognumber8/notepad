@@ -8,9 +8,11 @@ import { useRouter } from "next/navigation";
 function App() {
   const client = useApolloClient();
   const router = useRouter();
+  const [status, setStatus] = React.useState("idle");
   React.useEffect(() => {
     document.title = "Sing up";
   }, []);
+
   const [signUp, { loading, error }] = useMutation(CREATE_SIGN_UP, {
     onCompleted: (data) => {
       client.writeQuery({
@@ -23,9 +25,24 @@ function App() {
       router.push("/");
     },
   });
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error creating account</p>;
-  return <UserForm form="signUp" action={signUp} />;
+  React.useEffect(() => {
+    if (loading) {
+      setStatus("loading");
+    } else if (error) {
+      setStatus("error");
+    } else {
+      setStatus("idle");
+    }
+  }, [loading, error]);
+
+  return (
+    <>
+      <UserForm form="signUp" action={signUp} status={status}>
+        {loading && <p>Signing up...</p>}
+        {error && <p>Error creating account</p>}
+      </UserForm>
+    </>
+  );
 }
 
 export default App;

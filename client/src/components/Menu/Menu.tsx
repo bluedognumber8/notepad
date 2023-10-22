@@ -4,8 +4,10 @@ import Link from "next/link";
 import { useQuery, useApolloClient } from "@apollo/client";
 import { gql } from "@/__generated__/gql";
 import { styled } from "styled-components";
+import { useRouter } from "next/navigation";
 
 const links = [
+  { name: "New note", url: "/new" },
   { name: "Notes", url: "/notes" },
   { name: "Favorite", url: "/favorite" },
   { name: "Profile", url: "/profile" },
@@ -24,6 +26,7 @@ function Menu() {
   React.useEffect(() => {
     setisLoggedIn(!!data?.isLoggedIn);
   }, [data]);
+  const router = useRouter();
 
   return (
     <Ul>
@@ -46,6 +49,7 @@ function Menu() {
                 isLoggedIn: false,
               },
             });
+            router.push("/");
           }}
         >
           Log out

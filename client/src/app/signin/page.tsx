@@ -15,6 +15,7 @@ const IS_LOGGED_IN = gql(`
 function App() {
   const client = useApolloClient();
   const router = useRouter();
+  const [status, setStatus] = React.useState("idle");
   React.useEffect(() => {
     document.title = "Sing in";
   }, []);
@@ -30,10 +31,24 @@ function App() {
       router.push("/");
     },
   });
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error signing in</p>;
+  React.useEffect(() => {
+    if (loading) {
+      setStatus("loading");
+    } else if (error) {
+      setStatus("error");
+    } else {
+      setStatus("idle");
+    }
+  }, [loading, error]);
 
-  return <UserForm form="signIn" action={signIn} />;
+  return (
+    <>
+      <UserForm form="signIn" action={signIn} status={status}>
+        {loading && <p>Signing in...</p>}
+        {error && <p>Error signing in</p>}
+      </UserForm>
+    </>
+  );
 }
 
 export default App;

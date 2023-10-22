@@ -4,7 +4,6 @@ import Link from "next/link";
 import styled from "styled-components";
 import styles from "./page.module.css";
 import { useQuery } from "@apollo/client";
-import { gql } from "@/__generated__/gql";
 import { format } from "date-fns";
 import { GET_NOTE_FEED } from "@/graphql";
 
