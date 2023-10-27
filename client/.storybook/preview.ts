@@ -1,6 +1,7 @@
 // .storybook/preview.js
 import { withThemeFromJSXProvider } from "@storybook/addon-themes";
 import { createGlobalStyle } from "styled-components";
+import ApolloProvider from "../src/lib/apollo-provider";
 
 const GlobalStyles = createGlobalStyle`
    /*
@@ -53,5 +54,6 @@ const GlobalStyles = createGlobalStyle`
 export const decorators = [
   withThemeFromJSXProvider({
     GlobalStyles, // Adds your GlobalStyle component to all stories
+    Provider: ApolloProvider,
   }),
 ];

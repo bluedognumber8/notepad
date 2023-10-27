@@ -2,6 +2,13 @@ import type { Meta, StoryObj } from "@storybook/react";
 import Header from ".";
 
 const meta: Meta<typeof Header> = {
+  parameters: {
+    isFullscreen: true,
+    layout: "fullscreen",
+    nextjs: {
+      appDirectory: true,
+    },
+  },
   component: Header,
   render: () => <Header />,
 };
