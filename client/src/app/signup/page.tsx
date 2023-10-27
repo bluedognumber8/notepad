@@ -8,7 +8,8 @@ import { useRouter } from "next/navigation";
 function App() {
   const client = useApolloClient();
   const router = useRouter();
-  const [status, setStatus] = React.useState("idle");
+  type Status = "idle" | "loading" | "error";
+  const [status, setStatus] = React.useState<Status>("idle");
   React.useEffect(() => {
     document.title = "Sing up";
   }, []);
@@ -37,10 +38,7 @@ function App() {
 
   return (
     <>
-      <UserForm form="signUp" action={signUp} status={status}>
-        {loading && <p>Signing up...</p>}
-        {error && <p>Error creating account</p>}
-      </UserForm>
+      <UserForm form="signUp" action={signUp} status={status} />
     </>
   );
 }

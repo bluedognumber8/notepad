@@ -1,12 +1,14 @@
+"use client";
 import * as React from "react";
-import styles from "./Footer.module.css";
+import styled from "styled-components";
 
 function Footer() {
-  return (
-    <div className={styles.wrapper}>
-      Page rendered on {new Date().toLocaleString()}
-    </div>
-  );
+  return <Wrapper>Page rendered on {new Date().toLocaleString()}</Wrapper>;
 }
 
+const Wrapper = styled.div`
+  margin-top: auto;
+  margin-bottom: 50px;
+  text-align: center;
+`;
 export default Footer;
