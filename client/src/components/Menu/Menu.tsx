@@ -32,36 +32,39 @@ function Menu() {
     <Ul>
       {links.map((link, index) => {
         return (
-          <StyledLink key={index} href={link.url}>
-            <li>{link.name}</li>
-          </StyledLink>
+          <li key={index}>
+            <StyledLink href={link.url}>{link.name}</StyledLink>
+          </li>
         );
       })}
       {isLoggedIn ? (
-        <StyledLink
-          href="#"
-          onClick={() => {
-            localStorage.removeItem("token");
-            setisLoggedIn(false);
-            client.writeQuery({
-              query: IS_LOGGED_IN,
-              data: {
-                isLoggedIn: false,
-              },
-            });
-            router.push("/");
-          }}
-        >
-          Log out
-        </StyledLink>
+        <li>
+          <StyledLink
+            href="#"
+            onClick={() => {
+              localStorage.removeItem("token");
+              setisLoggedIn(false);
+              client.writeQuery({
+                query: IS_LOGGED_IN,
+                data: {
+                  isLoggedIn: false,
+                },
+              });
+              router.push("/");
+            }}
+          >
+            Log out
+          </StyledLink>
+        </li>
       ) : (
         <>
-          <StyledLink href="/signin">
-            <li>SignIn</li>
-          </StyledLink>
-          <StyledLink href="/signup">
-            <li>SignUp</li>
-          </StyledLink>
+          <li>
+            <StyledLink href="/signin">SignIn</StyledLink>
+          </li>
+
+          <li>
+            <StyledLink href="/signup">SignUp</StyledLink>
+          </li>
         </>
       )}
     </Ul>
