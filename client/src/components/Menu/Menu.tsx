@@ -29,58 +29,54 @@ function Menu() {
   const router = useRouter();
 
   return (
-    <Ul>
+    <Nav>
       {links.map((link, index) => {
         return (
-          <li key={index}>
-            <StyledLink href={link.url}>{link.name}</StyledLink>
-          </li>
+          <NavLink key={index} href={link.url}>
+            {link.name}
+          </NavLink>
         );
       })}
       {isLoggedIn ? (
-        <li>
-          <StyledLink
-            href="#"
-            onClick={() => {
-              localStorage.removeItem("token");
-              setisLoggedIn(false);
-              client.writeQuery({
-                query: IS_LOGGED_IN,
-                data: {
-                  isLoggedIn: false,
-                },
-              });
-              router.push("/");
-            }}
-          >
-            Log out
-          </StyledLink>
-        </li>
+        <NavLink
+          href="#"
+          onClick={() => {
+            localStorage.removeItem("token");
+            setisLoggedIn(false);
+            client.writeQuery({
+              query: IS_LOGGED_IN,
+              data: {
+                isLoggedIn: false,
+              },
+            });
+            router.push("/");
+          }}
+        >
+          Log out
+        </NavLink>
       ) : (
         <>
-          <li>
-            <StyledLink href="/signin">SignIn</StyledLink>
-          </li>
-
-          <li>
-            <StyledLink href="/signup">SignUp</StyledLink>
-          </li>
+          <NavLink href="/signin">Login</NavLink>
         </>
       )}
-    </Ul>
+    </Nav>
   );
 }
 
-const Ul = styled.ul`
+const Nav = styled.nav`
   display: flex;
-  justify-content: space-evenly;
-  gap: 10px;
-  list-style-type: none;
-  width: 100%;
+  flex-grow: 1;
+  justify-content: center;
+  gap: 40px;
+  margin-left: 40px;
+  margin-right: 40px;
 `;
 
-const StyledLink = styled(Link)`
-  font-size: 1.5rem;
+const NavLink = styled(Link)`
+  min-width: max-content;
+  text-transform: uppercase;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.3rem;
   text-decoration: none;
   &:hover {
     animation: scale 500ms;

@@ -19,10 +19,8 @@ function App() {
         return (
           <React.Fragment key={note?.id}>
             <Author>{note?.author.username}</Author>
-            <p className={styles.content}>{note?.content}</p>
-            <p className={styles.date}>
-              {format(new Date(note?.createdAt), "yyyy-MM-dd")}
-            </p>
+            <p>{note?.content}</p>
+            <p>{format(new Date(note?.createdAt), "yyyy-MM-dd")}</p>
             <Link href={`/notes/${note?.id}`}>{note?.id}</Link>
             <br />
           </React.Fragment>

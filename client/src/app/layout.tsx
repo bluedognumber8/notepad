@@ -25,7 +25,6 @@ function RootLayout({ children }: { children: React.ReactNode }) {
               <GlobalStyle />
               <Header />
               <main>{children}</main>
-              <Footer />
             </ThemeProvider>
           </StyledComponentsRegistry>
         </ApolloProvider>

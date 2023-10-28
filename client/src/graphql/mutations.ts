@@ -11,6 +11,7 @@ export const CREATE_SIGN_IN = gql(`
   signIn(username: $username, password: $password, email: $email)
 }
   `);
+
 export const CREATE_NEW_NOTE = gql(`
    mutation NewNote($content: String!) {
   newNote(content: $content) {
@@ -18,6 +19,4 @@ export const CREATE_NEW_NOTE = gql(`
     id
   }
 }
-
-
   `);
