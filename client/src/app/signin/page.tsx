@@ -1,23 +1,23 @@
-"use client";
-import React from "react";
-import styled from "styled-components";
-import Link from "next/link";
-import useAuthMutation from "@/hooks/useAuthMutation";
-import { CREATE_SIGN_IN, CREATE_SIGN_UP } from "@/graphql";
-import FormAuth from "@/components/FormAuth";
+'use client';
+import React from 'react';
+import styled from 'styled-components';
+import Link from 'next/link';
+import useAuthMutation from '@/hooks/useAuthMutation';
+import { CREATE_SIGN_IN, CREATE_SIGN_UP } from '@/graphql';
+import FormAuth from '@/components/FormAuth';
 
 function App() {
-  type Status = "idle" | "loading" | "error";
-  const [status, setStatus] = React.useState<Status>("idle");
+  type Status = 'idle' | 'loading' | 'error';
+  const [status, setStatus] = React.useState<Status>('idle');
   const [credentials, setCredentials] = React.useState({
-    username: "",
-    password: "",
-    email: "",
+    username: '',
+    password: '',
+    email: '',
   });
 
   const [isSingUp, setIsSingUp] = React.useState(false);
   React.useEffect(() => {
-    document.title = isSingUp ? "Sing up" : "Sing in";
+    document.title = isSingUp ? 'Sing up' : 'Sing in';
   }, [isSingUp]);
 
   const {
@@ -33,11 +33,11 @@ function App() {
 
   React.useEffect(() => {
     if (signInLoading || signUpLoading) {
-      setStatus("loading");
+      setStatus('loading');
     } else if (signInError || signUpError) {
-      setStatus("error");
+      setStatus('error');
     } else {
-      setStatus("idle");
+      setStatus('idle');
     }
   }, [signInLoading, signUpLoading, signInError, signUpError]);
 
@@ -48,12 +48,12 @@ function App() {
   }
 
   function handleChangeForm() {
-    setStatus("idle");
+    setStatus('idle');
     setIsSingUp(!isSingUp);
     setCredentials({
-      username: "",
-      password: "",
-      email: "",
+      username: '',
+      password: '',
+      email: '',
     });
   }
 

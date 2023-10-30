@@ -21,6 +21,7 @@ const GlobalStyle = createGlobalStyle<{ $whiteColor?: boolean }>`
     -webkit-font-smoothing: antialiased;
     color: ${(props) => (props.$whiteColor ? "white" : "black")};
     font-family: ${(props) => props.theme.fontFamily};
+    
   }
   img,
   picture,
@@ -49,6 +50,7 @@ const GlobalStyle = createGlobalStyle<{ $whiteColor?: boolean }>`
   #__next {
     isolation: isolate;
   }
+  
 `;
 
 export default function _GlobalStyle() {

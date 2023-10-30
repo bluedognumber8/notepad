@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
-import FormAuth from ".";
+import type { Meta, StoryObj } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
+import FormAuth from '.'
 
 const meta: Meta<typeof FormAuth> = {
   component: FormAuth,
@@ -9,30 +9,35 @@ const meta: Meta<typeof FormAuth> = {
       appDirectory: true,
     },
   },
-};
+  argTypes: {
+    credentials: { username: '', password: '', email: '' },
+  },
+  args: {
+    credentials: {
+      username: 'string',
+      password: 'string',
+      email: 'string',
+    },
+    handleSubmit: e => {
+      e.preventDefault()
+    },
+    isSingUp: false,
+    status: 'idle',
+  },
+}
 
-export default meta;
-type Story = StoryObj<typeof FormAuth>;
+export default meta
+type Story = StoryObj<typeof FormAuth>
 
 export const SignIn: Story = {
   args: {
-    handleSubmit: (e) => {
-      e.preventDefault();
-    },
     isSingUp: false,
-    status: "idle",
-    handleChangeForm: action("handleChangeForm"),
-    credentials: { username: "", password: "", email: "" },
+    handleChangeForm: action('handleChangeForm'),
   },
-};
+}
 export const SignUp: Story = {
   args: {
-    handleSubmit: (e) => {
-      e.preventDefault();
-    },
     isSingUp: true,
-    status: "idle",
-    handleChangeForm: action("handleChangeForm"),
-    credentials: { username: "", password: "", email: "" },
+    handleChangeForm: action('handleChangeForm'),
   },
-};
+}
